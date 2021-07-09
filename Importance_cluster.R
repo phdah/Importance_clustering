@@ -1,6 +1,6 @@
 ############################################
 # Automatic Data Exploration Process (ADEP)
-# Author: Philip Sjöberg
+# Author: Philip SjÃ¶berg
 # Date: 2020
 ############################################
 library(rpart)
@@ -16,22 +16,22 @@ cat("\014")
 
 #######################################
 
-wd = "C:/Users/philip.sjoberg/Desktop/Korning/03 R/Segmentering/" # Windows
+wd = "C:/Users/" # Windows
 
-file = "Bliwa_kundundersökning_2021.sav" # The name of the database file
+file = "file.sav" # The name of the database file
 
 Maindatabase = read_sav(paste0(wd, file), encoding = "UTF8")
 
-# # Filter for Q1 (exclude this if looking at all)
-# unique(Maindatabase$Q1)
-# Q1_filter = c(1, 2)
+# # Filter for var (exclude this if looking at all datapoints)
+# unique(Maindatabase$var)
+# var_filter = c(1, 2)
 # Maindatabase = Maindatabase %>%
-#   filter(Q1 %in% Q1_filter)
+#   filter(var %in% var_filter)
 
 # Clean data
 Suffix_scale <- "_scale" #  Continuous variable
 Suffix_factor <- "_factor" # Categorical variable
-depentend_var = "EPSI_Spread"
+depentend_var = "dep"
 
 # Set values
 nmiss = c(11, 98) # Missing 
@@ -91,7 +91,6 @@ vip(fit, num_features = length(fit$variable.importance), geom = "point", aesthet
 rpart.plot(fit, extra = 109, type = 1, main = (paste0("Tree for ", depentend_var, "\nNumber of observations: ", fit$frame[2][[1]][1])), roundint = F)
 
 # Print variable importance
-# fit$splits[order(fit$splits[,"improve"], decreasing = T),]
 data.frame(fit$variable.importance)
 
 frame = fit$frame
@@ -109,8 +108,3 @@ print(frame)
 # Tree splits
 print(label)
 print(label_missing)
-
-# Check the values of factors with
-# unique(Maindatabase$Trust_industry_em_scale)
-
-
